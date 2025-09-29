@@ -3,6 +3,9 @@
 Charge, fusionne et exécute des **workflows** (JSON ou PNG avec métadonnées) directement depuis un sélecteur intégré à ComfyUI.  
 Pensé pour les installations multiples en venv et les bibliothèques partagées sur disque externe.
 
+<img width="922" height="844" alt="image" src="https://github.com/user-attachments/assets/7f8bac34-936f-442c-936e-e3030faf68e7" />
+<img width="895" height="1183" alt="image" src="https://github.com/user-attachments/assets/367e991f-d853-44f9-8f4d-d6b923a1687a" />
+
 ---
 
 ## Fonctionnalités
