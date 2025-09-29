@@ -29,7 +29,7 @@ Designed for multiple venv installations and libraries shared on an external dri
    ```
 
 2. **Restart ComfyUI.**  
-   The node appears under **`orion4D / utils`** as **“Workflow Loader (orion4D)”**.
+   The node appears under **`Workflows`** as **“Workflow Loader by Orion4D)”**.
 
 ---
 
