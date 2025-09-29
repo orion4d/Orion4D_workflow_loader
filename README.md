@@ -160,4 +160,23 @@ ComfyUI/
 ## Mise à jour / Contributions
 
 1. Mettre à jour depuis GitHub (ou copier les fichiers).
-2. Redémarrer ComfyUI.  
+2. Redémarrer ComfyUI.
+---
+
+<div align="center">
+
+<h3>🌟 <strong>Show Your Support</strong></h3>
+
+<p>If this project helped you, please consider giving it a ⭐ on GitHub!</p>
+
+<p><strong>Made with ❤️ for the ComfyUI community</strong></p>
+
+<p><strong>by Orion4D</strong></p>
+
+<a href="https://ko-fi.com/orion4d">
+<img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Buy Me A Coffee" height="41" width="174">
+</a>
+
+</div>
+
+
