@@ -1,4 +1,4 @@
-# Workflow Loader (orion4D) — ComfyUI custom node
+# Workflow Loader — ComfyUI custom node
 
 Charge, fusionne et exécute des **workflows** (JSON ou PNG avec métadonnées) directement depuis un sélecteur intégré à ComfyUI.  
 Pensé pour les installations multiples en venv et les bibliothèques partagées sur disque externe.
