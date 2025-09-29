@@ -15,10 +15,6 @@ Designed for multiple venv installations and libraries shared on an external dri
   - `Add workflow`: inserts the workflow to the right of the node while keeping the current canvas (auto move of groups & nodes).
   - `new canvas`: replaces the current canvas with the loaded workflow.
 - **Quick actions**: `Select Workflow…`, `Run workflow`, `Clear Canvas`.
-- **Local API** (for external tools):
-  - `GET /orion4d/wf-list` → available tree
-  - `GET /orion4d/workflow?rel=<relative-path>` → normalized workflow content
-
 ---
 
 ## Installation
