@@ -1,59 +1,59 @@
 # Workflow Loader — ComfyUI custom node
 
-Charge, fusionne et exécute des **workflows** (JSON ou PNG avec métadonnées) directement depuis un sélecteur intégré à ComfyUI.  
-Pensé pour les installations multiples en venv et les bibliothèques partagées sur disque externe.
+Loads, merges, and runs **workflows** (JSON or PNG with metadata) directly from a selector integrated into ComfyUI.  
+Designed for multiple venv installations and libraries shared on an external drive.
 
 <img width="922" height="844" alt="image" src="https://github.com/user-attachments/assets/7f8bac34-936f-442c-936e-e3030faf68e7" />
 <img width="895" height="1183" alt="image" src="https://github.com/user-attachments/assets/367e991f-d853-44f9-8f4d-d6b923a1687a" />
 
 ---
 
-## Fonctionnalités
+## Features
 
-- **Sélecteur de workflow** (arbre de dossiers) avec statut.
-- **Modes de fusion** :
-  - `Add workflow` : insère le workflow à droite du node, en conservant le canvas courant (déplacement auto des groupes & nodes).
-  - `new canvas` : remplace le canvas courant par le workflow chargé.
-- **Actions rapides** : `Select Workflow…`, `Run workflow`, `Clear Canvas`.
-- **API locale** (pour outils externes) :
-  - `GET /orion4d/wf-list` → arborescence disponible
-  - `GET /orion4d/workflow?rel=<chemin-relatif>` → contenu normalisé du workflow
+- **Workflow selector** (folder tree) with status.
+- **Merge modes**:
+  - `Add workflow`: inserts the workflow to the right of the node while keeping the current canvas (auto move of groups & nodes).
+  - `new canvas`: replaces the current canvas with the loaded workflow.
+- **Quick actions**: `Select Workflow…`, `Run workflow`, `Clear Canvas`.
+- **Local API** (for external tools):
+  - `GET /orion4d/wf-list` → available tree
+  - `GET /orion4d/workflow?rel=<relative-path>` → normalized workflow content
 
 ---
 
 ## Installation
 
-1. **Cloner / copier** ce repo dans `ComfyUI/custom_nodes` :
+1. **Clone / copy** this repo into `ComfyUI/custom_nodes`:
    ```text
    ComfyUI/custom_nodes/orion4D_workflow_loader/
      ├─ __init__.py
      ├─ wf_loader.py
-     ├─ web/           (JS/HTML/CSS du sélecteur)
-     └─ workflows/     (dossier cible — voir ci-dessous : jonctions)
+     ├─ web/           (JS/HTML/CSS for the selector)
+     └─ workflows/     (target folder — see below: junctions)
    ```
 
-2. **Redémarrer ComfyUI.**  
-   Le node apparaît sous **`orion4D / utils`** sous le nom **“Workflow Loader (orion4D)”**.
+2. **Restart ComfyUI.**  
+   The node appears under **`orion4D / utils`** as **“Workflow Loader (orion4D)”**.
 
 ---
 
-## Conseil d'utilisation : utiliser une *jonction* pour le dossier `workflows`
+## Usage tip: use a *junction* for the `workflows` folder
 
-**Principe**  
-- Garder `custom_nodes/orion4D_workflow_loader/workflows` comme **jonction** pointant vers `../ComfyUI/user/default/workflows`.
-- Et **ce** `user/default/workflows` peut lui-même être une **jonction** vers un dossier sur **disque externe** (partagé entre plusieurs ComfyUI en venv).
+**Concept**  
+- Keep `custom_nodes/orion4D_workflow_loader/workflows` as a **junction** pointing to `../ComfyUI/user/default/workflows`.
+- And **that** `user/default/workflows` can itself be a **junction** to a folder on an **external drive** (shared between several ComfyUI venvs).
 
-### Pourquoi ?
-- **Ajout/modification/suppression des workflows directement dans comfyui.
-- **Une seule bibliothèque** de workflows à maintenir.
-- **Partage** entre plusieurs installations.
-- **Pas de duplication** ni chemins cassés lors des mises à jour.
+### Why?
+- **Add/modify/delete workflows directly in ComfyUI.**
+- **Single** workflow library to maintain.
+- **Shareable** across multiple installations.
+- **No duplication** or broken paths during updates.
 
-### Windows (CMD, recommandé)
+### Windows (CMD, recommended)
 
-> Ouvrir **Invite de commandes en administrateur**.
+> Open **Command Prompt as Administrator**.
 
-1) Faire de `ComfyUI\user\default\workflows` une jonction vers un dossier externe (ex. `E:\AI\SharedWorkflows`) :
+1) Turn `ComfyUI\user\default\workflows` into a junction to an external folder (e.g. `E:\AI\SharedWorkflows`):
 
 ```bat
 cd /d D:\ComfyUI_dev\ComfyUI\user\default
@@ -61,7 +61,7 @@ rmdir /s /q workflows  2>nul
 mklink /J workflows E:\AI\SharedWorkflows
 ```
 
-2) Dans le node, faire pointer `custom_nodes\orion4D_workflow_loader\workflows` vers `user\default\workflows` :
+2) In the node, point `custom_nodes\orion4D_workflow_loader\workflows` to `user\default\workflows`:
 
 ```bat
 cd /d D:\ComfyUI_dev\ComfyUI\custom_nodes\orion4D_workflow_loader
@@ -69,16 +69,16 @@ rmdir /s /q workflows  2>nul
 mklink /J workflows D:\ComfyUI_dev\ComfyUI\user\default\workflows
 ```
 
-> Répétez **l’étape 2** dans **chaque** installation ComfyUI (venv différente) pour mutualiser la même bibliothèque externe.
+> Repeat **step 2** in **each** ComfyUI installation (different venv) to share the same external library.
 
-### PowerShell (équivalent)
+### PowerShell (equivalent)
 
 ```powershell
-# Jonction depuis user\default vers le disque externe
+# Junction from user\default to the external drive
 Remove-Item -Recurse -Force "D:\ComfyUI_dev\ComfyUI\user\default\workflows" -ErrorAction SilentlyContinue
 New-Item -ItemType Junction -Path "D:\ComfyUI_dev\ComfyUI\user\default\workflows" -Target "E:\AI\SharedWorkflows"
 
-# Jonction depuis le custom node vers user\default\workflows
+# Junction from the custom node to user\default\workflows
 Remove-Item -Recurse -Force "D:\ComfyUI_dev\ComfyUI\custom_nodes\orion4D_workflow_loader\workflows" -ErrorAction SilentlyContinue
 New-Item -ItemType Junction -Path "D:\ComfyUI_dev\ComfyUI\custom_nodes\orion4D_workflow_loader\workflows" -Target "D:\ComfyUI_dev\ComfyUI\user\default\workflows"
 ```
@@ -86,7 +86,7 @@ New-Item -ItemType Junction -Path "D:\ComfyUI_dev\ComfyUI\custom_nodes\orion4D_w
 ### macOS / Linux (symlinks)
 
 ```bash
-# Exemple : dossier partagé /Volumes/External/SharedWorkflows
+# Example: shared folder /Volumes/External/SharedWorkflows
 rm -rf ~/ComfyUI/user/default/workflows
 ln -s /Volumes/External/SharedWorkflows ~/ComfyUI/user/default/workflows
 
@@ -94,73 +94,74 @@ rm -rf ~/ComfyUI/custom_nodes/orion4D_workflow_loader/workflows
 ln -s ~/ComfyUI/user/default/workflows ~/ComfyUI/custom_nodes/orion4D_workflow_loader/workflows
 ```
 
-> macOS : si nécessaire, accorder **Full Disk Access** au Terminal.
+> macOS: if necessary, grant **Full Disk Access** to Terminal.
 
-Bonus : un script Windows .bat est inclus pour créer des jonctions de dossier !
----
-
-## Utilisation
-
-1. Déposer le node **Workflow Loader (orion4D)** sur le canvas.
-2. Cliquer **“Select Workflow…”** et choisir un `.json` ou `.png` (avec métadonnée `workflow`/`prompt`).
-3. Choisir le **merge mode** :
-   - `Add workflow` (par défaut) : insère à droite du node.
-   - `new canvas` : remplace le canvas.
-4. **Run workflow** pour charger/ajouter.
-5. **Clear Canvas** pour repartir de zéro (le node est ré-injecté automatiquement).
+Bonus: a Windows .bat script is included to create folder junctions!
 
 ---
 
-## Compatibilité
+## Usage
 
-- Testé sur **Windows 11** (Python 3.12.x, ComfyUI ≥ `v0.3.58`).  
-- Fonctionne avec des workflows **JSON** et **PNG** exportés par ComfyUI (métadonnées).
-
----
-
-## Sécurité & limitations
-
-- L’API bloque l’accès hors `workflows/` (chemins relatifs `..` neutralisés).
-- Si des custom nodes manquent, ComfyUI affichera les types “Unknown”.
-- En mode `Add workflow`, un décalage automatique aligne le workflow **à droite** du node.
+1. Drop the **Workflow Loader (orion4D)** node onto the canvas.
+2. Click **“Select Workflow…”** and pick a `.json` or `.png` (with `workflow`/`prompt` metadata).
+3. Choose the **merge mode**:
+   - `Add workflow` (default): inserts to the right of the node.
+   - `new canvas`: replaces the canvas.
+4. **Run workflow** to load/add it.
+5. **Clear Canvas** to start fresh (the node is automatically re-injected).
 
 ---
 
-## Arborescence recommandée
+## Compatibility
+
+- Tested on **Windows 11** (Python 3.12.x, ComfyUI ≥ `v0.3.58`).  
+- Works with **JSON** and **PNG** workflows exported by ComfyUI (metadata).
+
+---
+
+## Security & limitations
+
+- The API blocks access outside `workflows/` (relative `..` paths are neutralized).
+- If custom nodes are missing, ComfyUI will show “Unknown” types.
+- In `Add workflow` mode, auto offset aligns the workflow **to the right** of the node.
+
+---
+
+## Recommended tree
 
 ```text
 ComfyUI/
 ├─ user/
 │  └─ default/
-│     └─ workflows  → (jonction) E:\AI\SharedWorkflows
+│     └─ workflows  → (junction) E:\AI\SharedWorkflows
 └─ custom_nodes/
    └─ orion4D_workflow_loader/
       ├─ __init__.py
       ├─ wf_loader.py
       ├─ web/
-      └─ workflows    → (jonction) ..\..\user\default\workflows
+      └─ workflows    → (junction) ..\..\user\default\workflows
 ```
 
 ---
 
-## Dépannage
+## Troubleshooting
 
-- **Le bouton “Select Workflow…” n’affiche rien**  
-  Vérifier que `workflows/` existe et pointe vers un dossier valide avec des `.json`/`.png`.  
-  Sous Windows, recréer la jonction en **Invite admin**.
+- **The “Select Workflow…” button shows nothing**  
+  Check that `workflows/` exists and points to a valid folder with `.json`/`.png`.  
+  On Windows, recreate the junction in an **admin prompt**.
 
-- **“file_not_found”** après sélection  
-  Le lien de jonction ciblait un lecteur non monté (disque externe débranché).
+- **“file_not_found” after selection**  
+  The junction pointed to an unmounted drive (external disk unplugged).
 
-- **Le workflow ne se connecte pas au reste**  
-  Normal : l’outil **ajoute**/charge sans câbler automatiquement. Connecter selon besoin.
+- **The workflow doesn't connect to the rest**  
+  That's expected: the tool **adds**/loads without wiring automatically. Connect as needed.
 
 ---
 
-## Mise à jour / Contributions
+## Update / Contributions
 
-1. Mettre à jour depuis GitHub (ou copier les fichiers).
-2. Redémarrer ComfyUI.
+1. Update from GitHub (or copy the files).
+2. Restart ComfyUI.
 ---
 
 <div align="center">
@@ -178,5 +179,3 @@ ComfyUI/
 </a>
 
 </div>
-
-
